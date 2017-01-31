@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "### ここだけ入力！###\nfood_ratings <- function(id)\n{\n  path1 <- \"F:/motoki_saito_exp/stimuli_generation/exp4_saccade/\"\n  path2 <- \"F:/motoki_saito_exp/stimuli_generation/exp5_house/\"\n\n  #食べ物刺激選定関数\n  DivideGroup <- function(dat)\n  {\n    dat1 <- dat[,c(1,2,3,4)]\n    tMed <- 3\n    hMed <- 3\n    group <- numeric(length(dat1[,1]))\n\n    group[(dat1[,2]>=tMed)&(dat1[,3]>=hMed)] <- \"A\"\n    group[(dat1[,2]>=tMed)&(dat1[,3]<hMed)] <- \"B\"\n    group[(dat1[,2]<tMed)&(dat1[,3]>=hMed)] <- \"C\"\n    group[(dat1[,2]<tMed)&(dat1[,3]<hMed)] <- \"D\"\n\n    if(sum(group==\"A\")<20)\n    {\n      dn <- 20-sum(group==\"A\")\n      group[which(group==\"B\")[1:dn]] <- \"A\"\n    }else if(sum(group==\"B\")<20)\n    {\n      dn <- 20-sum(group==\"B\")\n      group[which(group==\"C\")[1:dn]] <- \"B\"\n    }else if(sum(group==\"C\")<20)\n    {\n      dn <- 20-sum(group==\"C\")\n      group[which(group==\"D\")[1:dn]] <- \"C\"\n    }else if(sum(group==\"D\")<20)\n    {\n      dn <- 20-sum(group==\"D\")\n      group[which(group==\"C\")[1:dn]] <- \"D\"\n    }\n\n    dat2 <- cbind(dat1,group)\n    dat3 <- dat2[order(dat2[,5]),]\n    return(dat3)\n\n    #引数#\n    # dat - 食べ物の評価チE?タ\n\n    #返却値#\n    # dat3 - groupの変数を加えた評価チE?タ\n  }\n\n  SamGet <- function(dat,n=20)\n  {\n    rdat <- matrix(NA,4*n,4)\n    group <- rep(c(\"a\",\"b\",\"c\",\"d\"),each=n)\n    pro_name <- paste(group,rep(c(1:n),4),sep=\"\")\n    rdat2 <- as.data.frame(rdat)\n    rdat2[,1] <- group\n    rdat2[,2] <- pro_name\n    g1 <- dat[sample(which(dat[,5] == \"A\"),n),c(1,4)]\n    g2 <- dat[sample(which(dat[,5] == \"B\"),n),c(1,4)]\n    g3 <- dat[sample(which(dat[,5] == \"C\"),n),c(1,4)]\n    g4 <- dat[sample(which(dat[,5] == \"D\"),n),c(1,4)]\n\n    rdat2[,3:4] <- rbind(g1,g2,g3,g4)\n    colnames(rdat2) <- c(\"group\",\"pro_name\",\"pic_name\",\"pref_rating\")\n    return(rdat2)\n    #引数#\n    # dat - DivideGroupで出力されたチE?タ\n    # n - 吁E°ループから抜き傅すデータの個数\n\n    #返却値#\n    # rdat2 - 実験で使ぁE?激の名前\n  }\n\n\n  Tdat <- read.csv(paste(path1,\"p\",as.character(id),\"t.csv\",sep=\"\"))\n  Hdat <- read.csv(paste(path1,\"p\",as.character(id),\"h.csv\",sep=\"\"))\n  Pdat <- read.csv(paste(path1,\"p\",as.character(id),\"p.csv\",sep=\"\"))\n\n  Tdat1 <- Tdat[!is.na(Tdat[,10]),c(1,10)]\n  Hdat1 <- Hdat[!is.na(Hdat[,10]),c(1,10)]\n  Pdat1 <- Pdat[!is.na(Pdat[,10]),c(1,10)]\n\n  mdat <- merge(Tdat1,Hdat1,by=\"food\")\n  mdat1 <- as.data.frame(merge(mdat,Pdat1,by=\"food\"))\n\n  # 2 groupのラベルをつける\n  ddat <- DivideGroup(mdat1)\n  # 3 吁Eroupからランダムで???個取り傅ぁE\n  res <- SamGet(ddat)\n  # 4 出?E\n  write.csv(res,paste(path1,\"p\",as.character(id),\"_saccade.csv\",sep=\"\"),)\n  write.csv(res,paste(path2,\"p\",as.character(id),\"_saccade.csv\",sep=\"\"),)\n}\n",
+    "created" : 1485792592667.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1797073487",
+    "id" : "146CC5DB",
+    "lastKnownWriteTime" : 1485792619,
+    "last_content_update" : 1485792619440,
+    "path" : "C:/Program Files/R/R-3.2.4revised/library/saitoFuns/R/food_ratings.R",
+    "project_path" : "R/food_ratings.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

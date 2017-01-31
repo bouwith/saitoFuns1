@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "emotion_ratings <- function(id)\n{\n  path1 <- \"F:/motoki_saito_exp/stimuli_generation/exp3_emotion/\"\n\n  dat <- read.csv(paste(path1,\"p\",as.character(id),\".csv\",sep=\"\"))\n\n  #欠損値を削除\n  dat <- dat[!is.na(dat[,10]),c(1,10,12)]\n\n  #感情ごとに抜き出し\n  moji <- substring(as.character(dat[,1]),1,3)\n\n  POdat <- dat[which(moji==\"pos\"),]\n  NGdat <- dat[which(moji==\"neg\"),]\n  NTdat <- dat[which(moji==\"neu\"),]\n\n  POdat1 <- POdat[order(POdat[,2],decreasing=T),]\n  NGdat1 <- NGdat[order(NGdat[,2],decreasing=T),]\n  NTdat1 <- NTdat[order(NTdat[,2],decreasing=T),]\n\n  res <- rbind(POdat1[1:16,],\n               NGdat1[1:16,],\n               NTdat1[1:16,])\n\n  files <- list.files()\n\n\n  cond <- c(\"ePO\",\"eNG\",\"enT\")\n  rcon <- c(0,16,32)\n\n  for(i in 1:3)\n  {\n    for(j in 1:16)\n    {\n      num <- rcon[i]+j\n      stiName <- as.character(res[num,1])\n      file.copy(stiName,paste(c(\"p1/\",cond[i],j,\".jpg\"),collapse=\"\"))\n    }\n  }\n\n\n  write.csv(res,paste(path1,\"p\",as.character(id),\"_emotion.csv\",sep=\"\"))\n}\n",
+    "created" : 1485792553133.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3565095730",
+    "id" : "3FA61BE3",
+    "lastKnownWriteTime" : 1485792584,
+    "last_content_update" : 1485792584591,
+    "path" : "C:/Program Files/R/R-3.2.4revised/library/saitoFuns/R/emotion_ratings.R",
+    "project_path" : "R/emotion_ratings.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

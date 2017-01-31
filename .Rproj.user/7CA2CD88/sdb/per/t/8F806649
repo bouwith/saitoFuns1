@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "face_ratings <- function(id)\n{\n  #与えられたゅクトルをゅアにする関数\n  path1 <- \"F:/motoki_saito_exp/stimuli_generation/exp3_face/\"\n  Pairs <- function(vec)\n  {\n    Anum <- length(vec)\n\n    if(Anum%%2==1)\n    {\n      Anum <- Anum-1\n    }\n\n    orderNum <- 1:Anum\n    leftNum <- sample(orderNum,Anum/2)\n    RightNum <- orderNum[!is.element(orderNum,leftNum)]\n    res <- cbind(vec[leftNum],vec[RightNum])\n    return(res)\n  }\n\n  #ペアにした刺激の行傅を作る関数\n  PairDat <- function(devdat,sex)\n  {\n    for(i in 1:5)\n    {\n      ddat <- subset(devdat,devdat[,2]==i)\n      if(nrow(ddat)<2)\n      {\n        next\n      }\n      res <- as.data.frame(Pairs(as.character(ddat[,1])))\n      res1 <- cbind(i,res,sex)\n      colnames(res1) <- c(\"rating\",\"u_name\",\"b_name\",\"gender\")\n\n      if(i ==1)\n      {\n        res2 <- res1\n      }\n      else\n      {\n        res2 <- rbind(res2,res1)\n      }\n    }\n    return(res2)\n\n    #devdat - 刺激の性別ごとに刁EɲしたチEタ\n    #sex - 刺激の性別 f or m\n  }\n\n  PairDevSam <- function(dat)\n  {\n    #NAの行を削除\n    sdat <- dat[!is.na(dat[,10]),c(1,10)]\n\n    itemNumber <- as.integer(gsub(\".jpg\",\"\",sdat[,1]))\n    nM <- which(itemNumber>=500)\n    nF <- which(!itemNumber>=500)\n    #性別ごとに刁Eɲ\n    Mdat <- sdat[nM,]\n    Fdat <- sdat[nF,]\n\n    conditions <- rep(c(\"posi\",\"nega\",\"neutSame\"),each=16)\n    fdat <- PairDat(Fdat,\"f\")\n    mdat <- PairDat(Mdat,\"m\")\n\n    ramOrderF <- sample(1:nrow(fdat))\n    ramOrderM <- sample(1:nrow(mdat))\n    fdat1 <- cbind(fdat[ramOrderF[1:48],],conditions)\n    mdat1 <- cbind(mdat[ramOrderM[1:48],],conditions)\n    Res <- rbind(fdat1,mdat1)\n    return(Res)\n\n  }\n\n  ratingDev <- function(rdat,sex)\n  {\n    ramOrder <- sample(1:nrow(rdat))\n    rdat1 <- rdat[ramOrder,]\n\n    rn <- nrow(rdat1)\n    if(rn%%2==1)\n    {\n      rn <- rn-1\n    }\n    dev1 <- rdat1[1:(rn/2),]\n    dev2 <- rdat1[((rn/2)+1):rn,]\n\n    rating <- dev1[,2]-dev2[,2]\n    mdat <- as.data.frame(cbind(as.character(dev1[,1]),as.character(dev2[,1])))\n    mdat1 <- cbind(rating,mdat,sex)\n    d2 <- subset(mdat1,mdat1[,1]==2)[1:4,]\n    d1 <- subset(mdat1,mdat1[,1]==1)[1:4,]\n    dn1 <- subset(mdat1,mdat1[,1]==-1)[1:4,]\n    dn2 <- subset(mdat1,mdat1[,1]==-2)[1:4,]\n    mdat2 <- rbind(d2,d1,dn1,dn2)\n    colnames(mdat2) <- c(\"rating\",\"u_name\",\"b_name\",\"gender\")\n    return(mdat2)\n  }\n\n\n\n  PairDevDif <- function(dat)\n  {\n    #NAの行を削除\n    sdat <- dat[!is.na(dat[,10]),c(1,10)]\n\n    itemNumber <- as.integer(gsub(\".jpg\",\"\",sdat[,1]))\n    nM <- which(itemNumber>=500)\n    nF <- which(!itemNumber>=500)\n    #性別ごとに刁Eɲ\n    Mdat <- sdat[nM,]\n    Fdat <- sdat[nF,]\n\n    fDat <- ratingDev(Fdat,\"f\")\n    mDat <- ratingDev(Mdat,\"m\")\n    Res2 <- rbind(fDat,mDat)\n    conditions <- \"NeutDif\"\n    Res3 <- cbind(Res2,conditions)\n    return(Res3)\n  }\n\n\n  #解极E\n  dat <- read.csv(paste(path1,\"p\",id,\".csv\",sep=\"\"))\n  Res5 <- rbind(PairDevSam(dat),PairDevDif(dat))\n  write.csv(Res5,paste(path1,\"p\",id,\"_face.csv\",sep=\"\"))\n\n}\n",
+    "created" : 1485792636871.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1353611624",
+    "id" : "8F806649",
+    "lastKnownWriteTime" : 1485792650,
+    "last_content_update" : 1485792650035,
+    "path" : "C:/Program Files/R/R-3.2.4revised/library/saitoFuns/R/face_ratings.R",
+    "project_path" : "R/face_ratings.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
