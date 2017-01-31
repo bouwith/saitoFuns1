@@ -1,4 +1,4 @@
-﻿emotion_ratings <- function(id)
+emotion_ratings <- function(id)
 {
   path1 <- "F:/motoki_saito_exp/stimuli_generation/exp3_emotion/"
 
