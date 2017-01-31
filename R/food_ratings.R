@@ -1,10 +1,9 @@
-### ここだけ入力！###
 food_ratings <- function(id)
 {
   path1 <- "F:/motoki_saito_exp/stimuli_generation/exp4_saccade/"
   path2 <- "F:/motoki_saito_exp/stimuli_generation/exp5_house/"
 
-  #食べ物刺激選定関数
+  #food selection 
   DivideGroup <- function(dat)
   {
     dat1 <- dat[,c(1,2,3,4)]
@@ -39,11 +38,11 @@ food_ratings <- function(id)
     dat3 <- dat2[order(dat2[,5]),]
     return(dat3)
 
-    #引数#
-    # dat - 食べ物の評価チE?タ
+    #variable#
+    # dat - food rating data
 
-    #返却値#
-    # dat3 - groupの変数を加えた評価チE?タ
+    #return#
+    # dat3 - rating data with rating category
   }
 
   SamGet <- function(dat,n=20)
@@ -63,14 +62,15 @@ food_ratings <- function(id)
     colnames(rdat2) <- c("group","pro_name","pic_name","pref_rating")
     return(rdat2)
     #引数#
-    # dat - DivideGroupで出力されたチE?タ
-    # n - 吁E°ループから抜き傅すデータの個数
+    # dat - data returned by DivideGroup
+    # n - number in each group, defalt=20
 
     #返却値#
-    # rdat2 - 実験で使ぁE?激の名前
+    # rdat2 - stimuli names
   }
 
 
+  # Execution
   Tdat <- read.csv(paste(path1,"p",as.character(id),"t.csv",sep=""))
   Hdat <- read.csv(paste(path1,"p",as.character(id),"h.csv",sep=""))
   Pdat <- read.csv(paste(path1,"p",as.character(id),"p.csv",sep=""))
@@ -82,11 +82,10 @@ food_ratings <- function(id)
   mdat <- merge(Tdat1,Hdat1,by="food")
   mdat1 <- as.data.frame(merge(mdat,Pdat1,by="food"))
 
-  # 2 groupのラベルをつける
   ddat <- DivideGroup(mdat1)
-  # 3 吁Eroupからランダムで???個取り傅ぁE
+  
   res <- SamGet(ddat)
-  # 4 出?E
+  
   write.csv(res,paste(path1,"p",as.character(id),"_saccade.csv",sep=""),)
   write.csv(res,paste(path2,"p",as.character(id),"_saccade.csv",sep=""),)
 }

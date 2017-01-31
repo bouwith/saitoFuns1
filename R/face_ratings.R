@@ -1,6 +1,6 @@
 face_ratings <- function(id)
 {
-  #与えられたゅクトルをゅアにする関数
+  #vector to pair
   path1 <- "F:/motoki_saito_exp/stimuli_generation/exp3_face/"
   Pairs <- function(vec)
   {
@@ -18,7 +18,7 @@ face_ratings <- function(id)
     return(res)
   }
 
-  #ペアにした刺激の行傅を作る関数
+  #make pairs matrix
   PairDat <- function(devdat,sex)
   {
     for(i in 1:5)
@@ -43,19 +43,19 @@ face_ratings <- function(id)
     }
     return(res2)
 
-    #devdat - 刺激の性別ごとに刁EɲしたチEタ
-    #sex - 刺激の性別 f or m
+    #devdat - gender divided DATA
+    #sex - gender: f or m
   }
 
   PairDevSam <- function(dat)
   {
-    #NAの行を削除
+    #NA omit
     sdat <- dat[!is.na(dat[,10]),c(1,10)]
 
     itemNumber <- as.integer(gsub(".jpg","",sdat[,1]))
     nM <- which(itemNumber>=500)
     nF <- which(!itemNumber>=500)
-    #性別ごとに刁Eɲ
+    #Data divided gender
     Mdat <- sdat[nM,]
     Fdat <- sdat[nF,]
 
@@ -101,13 +101,13 @@ face_ratings <- function(id)
 
   PairDevDif <- function(dat)
   {
-    #NAの行を削除
+    #NA omit
     sdat <- dat[!is.na(dat[,10]),c(1,10)]
 
     itemNumber <- as.integer(gsub(".jpg","",sdat[,1]))
     nM <- which(itemNumber>=500)
     nF <- which(!itemNumber>=500)
-    #性別ごとに刁Eɲ
+    #Data divided by gender
     Mdat <- sdat[nM,]
     Fdat <- sdat[nF,]
 
@@ -120,7 +120,7 @@ face_ratings <- function(id)
   }
 
 
-  #解极E
+  #Exection
   dat <- read.csv(paste(path1,"p",id,".csv",sep=""))
   Res5 <- rbind(PairDevSam(dat),PairDevDif(dat))
   write.csv(Res5,paste(path1,"p",id,"_face.csv",sep=""))

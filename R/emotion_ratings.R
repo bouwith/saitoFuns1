@@ -1,13 +1,13 @@
-emotion_ratings <- function(id)
+﻿emotion_ratings <- function(id)
 {
   path1 <- "F:/motoki_saito_exp/stimuli_generation/exp3_emotion/"
 
   dat <- read.csv(paste(path1,"p",as.character(id),".csv",sep=""))
 
-  #欠損値を削除
+  #omit NA
   dat <- dat[!is.na(dat[,10]),c(1,10,12)]
 
-  #感情ごとに抜き出し
+  #subset emotion
   moji <- substring(as.character(dat[,1]),1,3)
 
   POdat <- dat[which(moji=="pos"),]
