@@ -15,8 +15,16 @@ emotion_ratings <- function(id)
   NTdat <- dat[which(moji=="neu"),]
 
   POdat1 <- POdat[order(POdat[,2],decreasing=T),]
-  NGdat1 <- NGdat[order(NGdat[,2],decreasing=T),]
-  NTdat1 <- NTdat[order(NTdat[,2],decreasing=T),]
+  NGdat1 <- NGdat[order(NGdat[,2],decreasing=F),]
+  NTdat1 <- NTdat[NTdat[,2]==4,]
+  if(nrow(NTdat1)<16)
+  {
+  	NTdat1 <- rbind(NTdat1,NTdat[NTdat[,2]==5,])
+  }
+  if(nrow(NTdat1)<16)
+  {
+  	NTdat1 <- rbind(NTdat1,NTdat[NTdat[,2]==3,])
+  }
 
   res <- rbind(POdat1[1:16,],
                NGdat1[1:16,],
