@@ -26,26 +26,29 @@ emotion_ratings <- function(id)
   	NTdat1 <- rbind(NTdat1,NTdat[NTdat[,2]==3,])
   }
 
-  res <- rbind(POdat1[1:16,],
-               NGdat1[1:16,],
-               NTdat1[1:16,])
+  res <- rbind(POdat1[sample(1:16),],
+               NGdat1[sample(1:16),],
+               NTdat1[sample(1:16),])
 
   files <- list.files()
 
 
   cond <- c("ePO","eNG","enT")
   rcon <- c(0,16,32)
-
-  for(i in 1:3)
+  plu16 <- c(0,16)
+  for(h in 1:2)
   {
-    for(j in 1:16)
-    {
-      num <- rcon[i]+j
-      stiName <- as.character(res[num,1])
-      file.copy(stiName,paste(c("p1/",cond[i],j,".jpg"),collapse=""))
-    }
+	for(i in 1:3)
+	{
+		for(j in 1:16)
+		{
+		num <- rcon[i]+j
+		stiName <- as.character(res[num,1])
+		file.copy(stiName,paste(c("p1/",cond[i],j+plu16[h],".jpg"),collapse=""))
+		}
+	}
   }
 
-
   write.csv(res,paste(path1,"p",as.character(id),"_emotion.csv",sep=""))
+
 }
