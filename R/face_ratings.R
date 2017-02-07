@@ -31,6 +31,7 @@ PairDat <- function(devdat,sex)
 			next
 		}
 		
+		ddat <- subset(devdat,devdat[,2]==i)
 		res <- as.data.frame(Pairs(as.character(ddat[,1])))
 		res1 <- cbind(i,res,sex)
 		colnames(res1) <- c("rating","u_name","b_name","gender")
