@@ -19,33 +19,37 @@ face_ratings <- function(id)
   }
 
   #make pairs matrix
-  PairDat <- function(devdat,sex)
-  {
-    for(i in 1:5)
-    {
-      ddat <- subset(devdat,devdat[,2]==i)
-      if(nrow(ddat)<2)
-      {
-        next
-      }
-      res <- as.data.frame(Pairs(as.character(ddat[,1])))
-      res1 <- cbind(i,res,sex)
-      colnames(res1) <- c("rating","u_name","b_name","gender")
+PairDat <- function(devdat,sex)
+{
+	nowFiles <- ls()
+	for(i in 1:5)
+	{
+		Ratings <- c(1:5)
+		subRatings <- unique(devdat[,2])
+		if(is.element(Ratings[i],subRatings)==FALSE)
+		{
+			next
+		}
+		
+		res <- as.data.frame(Pairs(as.character(ddat[,1])))
+		res1 <- cbind(i,res,sex)
+		colnames(res1) <- c("rating","u_name","b_name","gender")
+		
+		
+		if(is.element("res2",nowFiles)==FALSE)
+		{
+			res2 <- res1
+		}
+		else
+		{
+			res2 <- rbind(res2,res1)
+		}
+	}
+	return(res2)
 
-      if(i ==1)
-      {
-        res2 <- res1
-      }
-      else
-      {
-        res2 <- rbind(res2,res1)
-      }
-    }
-    return(res2)
-
-    #devdat - gender divided DATA
-    #sex - gender: f or m
-  }
+#devdat
+#sex
+}
 
   PairDevSam <- function(dat)
   {
