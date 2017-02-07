@@ -19,19 +19,19 @@ food_ratings <- function(id)
     if(sum(group=="A")<20)
     {
       dn <- 20-sum(group=="A")
-      group[which(group=="B")[1:dn]] <- "A"
+      group[which((group=="B")|(group=="C")|(group=="D"))[1:dn]] <- "A"
     }else if(sum(group=="B")<20)
     {
       dn <- 20-sum(group=="B")
-      group[which(group=="C")[1:dn]] <- "B"
+      group[which((group=="A")|(group=="C")|(group=="D"))[1:dn]] <- "B"
     }else if(sum(group=="C")<20)
     {
       dn <- 20-sum(group=="C")
-      group[which(group=="D")[1:dn]] <- "C"
+      group[which((group=="A")|(group=="B")|(group=="D"))[1:dn]] <- "C"
     }else if(sum(group=="D")<20)
     {
       dn <- 20-sum(group=="D")
-      group[which(group=="C")[1:dn]] <- "D"
+      group[which((group=="A")|(group=="C")|(group=="B"))[1:dn]] <- "D"
     }
 
     dat2 <- cbind(dat1,group)
