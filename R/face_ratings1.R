@@ -99,9 +99,11 @@ PairDat <- function(devdat,sex)
     mdat <- as.data.frame(cbind(as.character(dev1[,1]),as.character(dev2[,1])))
     mdat1 <- cbind(rating,mdat,sex)
     d2 <- subset(mdat1,mdat1[,1]==1)[1:4,]
+	d2[,1] <- d2[,1]*2
     d1 <- subset(mdat1,mdat1[,1]==1)[5:8,]
     dn1 <- subset(mdat1,mdat1[,1]==-1)[1:4,]
     dn2 <- subset(mdat1,mdat1[,1]==-1)[5:8,]
+	dn2[,1] <- dn2[,1]*2
     mdat2 <- rbind(d2,d1,dn1,dn2)
     colnames(mdat2) <- c("rating","u_name","b_name","gender")
     return(mdat2)
