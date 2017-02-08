@@ -21,9 +21,9 @@ face_ratings <- function(id)
   #make pairs matrix
 PairDat <- function(devdat,sex)
 {
-	nowFiles <- ls()
+	count <- 0
 	for(i in 1:5)
-	{
+	{	
 		Ratings <- c(1:5)
 		subRatings <- unique(devdat[,2])
 		if(is.element(Ratings[i],subRatings)==FALSE)
@@ -32,14 +32,19 @@ PairDat <- function(devdat,sex)
 		}
 		
 		ddat <- subset(devdat,devdat[,2]==i)
+		if(nrow(ddat)<2)
+		{
+			next
+		}
+		
 		res <- as.data.frame(Pairs(as.character(ddat[,1])))
 		res1 <- cbind(i,res,sex)
 		colnames(res1) <- c("rating","u_name","b_name","gender")
 		
-		
-		if(is.element("res2",nowFiles)==FALSE)
+		if(count==0)
 		{
 			res2 <- res1
+			count <- count+1
 		}
 		else
 		{
@@ -76,7 +81,7 @@ PairDat <- function(devdat,sex)
     return(Res)
 
   }
-
+  
   ratingDev <- function(rdat,sex)
   {
     ramOrder <- sample(1:nrow(rdat))
@@ -129,5 +134,4 @@ PairDat <- function(devdat,sex)
   dat <- read.csv(paste(path1,"p",id,".csv",sep=""))
   Res5 <- rbind(PairDevSam(dat),PairDevDif(dat))
   write.csv(Res5,paste(path1,"p",id,"_face.csv",sep=""))
-
 }
