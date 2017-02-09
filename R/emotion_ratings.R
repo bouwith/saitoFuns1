@@ -3,6 +3,7 @@ emotion_ratings <- function(id)
   path1 <- "F:/motoki_saito_exp/stimuli_generation/exp3_emotion/"
 
   dat <- read.csv(paste(path1,"p",as.character(id),".csv",sep=""))
+  dir.create(paste(path1,"p",id,sep=""))
 
   #omit NA
   dat <- dat[!is.na(dat[,10]),c(1,10,12)]
@@ -30,7 +31,7 @@ emotion_ratings <- function(id)
                NGdat1[sample(1:16),],
                NTdat1[sample(1:16),])
 
-  files <- list.files()
+  files <- list.files(path1)
 
 
   cond <- c("ePO","eNG","enT")
@@ -44,7 +45,7 @@ emotion_ratings <- function(id)
 		{
 		num <- rcon[i]+j
 		stiName <- as.character(res[num,1])
-		file.copy(stiName,paste(c("p1/",cond[i],j+plu16[h],".jpg"),collapse=""))
+		file.copy(paste(path1,stiName,sep=""),paste(c(path1,"p1/",cond[i],j+plu16[h],".jpg"),collapse=""))
 		}
 	}
   }
@@ -52,3 +53,4 @@ emotion_ratings <- function(id)
   write.csv(res,paste(path1,"p",as.character(id),"_emotion.csv",sep=""))
 
 }
+
