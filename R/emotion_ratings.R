@@ -45,7 +45,7 @@ emotion_ratings <- function(id)
 		{
 		num <- rcon[i]+j
 		stiName <- as.character(res[num,1])
-		file.copy(paste(path1,stiName,sep=""),paste(c(path1,"p1/",cond[i],j+plu16[h],".jpg"),collapse=""))
+		file.copy(paste(path1,stiName,sep=""),paste(c(path1,"p",as.character(id),"/",cond[i],j+plu16[h],".jpg"),collapse=""))
 		}
 	}
   }
